@@ -1,0 +1,42 @@
+html{
+
+}
+body{
+    font-family:"Microsoft Yahei";
+    font-size:12px;
+    margin:0;
+}
+.form-signin{
+    max-width: 300px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-top{
+    margin-top: 150px;
+}
+.input-user{
+    margin-bottom: 10px;
+}
+.label-right{
+    margin-right: 85px;
+}
+.label-left{
+    margin-left: 80px;
+}
+.bt-width{
+    width: 130px;
+}
+.head-margin{
+    margin-top: 50px;
+}
+.cue {
+    margin-top: 15px;
+    margin-bottom: 10px;border:1px solid #eeeeee;border-radius:3px;
+}
+.font-size{
+    font-size: 12px;
+}
+.input-below{
+    margin-bottom: 15px;
+}
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎登录图书借阅系统</title>
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/MyStyle.css">
+    <!--登录js文件-->
+    <script src="/js/login.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <h2 class="form-top text-center">欢迎登录图书借阅系统</h2>
+    <form class="form-signin" id="login_form">
+        <div class="form-group">
+            <label class="control-label" for="userName" id="tip"></label>
+            <input type="text" class="form-control  input-user" placeholder="用户名" name="userName" id="userName" autocomplete="off">
+        </div>
+        <input type="password" class="form-control input-below" placeholder="密码" name="userPassword" id="userPassword" autocomplete="off">
+        <label class="label">
+            <a class="label-right font-size" href="register.html">还没有账号？立即注册</a>
+            <a class="font-size">忘记密码</a>
+        </label>
+        <button class="btn btn-primary bt-width" id="submit">登录</button>
+        <button class="btn btn-info bt-width" id="reset">重置</button>
+    </form>
+</div>
+</body>
+</html>

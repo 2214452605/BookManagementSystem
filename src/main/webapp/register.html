@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>欢迎注册图书借阅系统</title>
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/MyStyle.css">
+</head>
+<body>
+<div class="container-fluid">
+    <h2 class="form-top text-center">欢迎注册图书借阅系统</h2>
+    <form class="form-signin" id="register_form">
+        <div class="form-group  has-feedback" id="div_for_userName">
+            <label class="control-label" for="userName" id="tip"></label>
+            <input type="text" class="form-control  input-user" placeholder="用户名" name="userName" id="userName" autocomplete="off"
+                   data-toggle="tooltip" title="格式:用户名为(2-12)个字符">
+            <span class="glyphicon  form-control-feedback" aria-hidden="true" id="log_img"></span>
+            <span id="un" class="sr-only">(success)</span>
+        </div>
+        <div class="form-group  has-feedback" id="div_for_userEmail">
+            <label class="control-label" for="userEmail" id="tip1"></label>
+            <input type="email" class="form-control input-below" placeholder="邮箱" name="userPassword" id="userEmail" autocomplete="off"
+                   data-toggle="tooltip" title="格式:xx@xx">
+            <span class="glyphicon  form-control-feedback" aria-hidden="true" id="log_img1"></span>
+            <span id="ea" class="sr-only">(success)</span>
+        </div>
+        <div class="form-group  has-feedback" id="div_for_userPassword">
+            <label class="control-label" for="userPassword" id="tip2"></label>
+            <input type="password" class="form-control input-below" placeholder="密码" name="userPassword" id="userPassword" autocomplete="off"
+                   data-toggle="tooltip" title="格式:6-16个字符"
+            >
+            <span class="glyphicon  form-control-feedback" aria-hidden="true" id="log_img2"></span>
+            <span id="pw" class="sr-only">(success)</span>
+        </div>
+        <div class="form-group  has-feedback" id="div_for_userPassword1">
+            <label class="control-label" for="userPassword1" id="tip3"></label>
+            <input type="password" class="form-control input-below" placeholder="重复密码" name="userPassword" id="userPassword1" autocomplete="off"
+            >
+            <span class="glyphicon  form-control-feedback" aria-hidden="true" id="log_img3"></span>
+            <span id="pwp" class="sr-only">(success)</span>
+        </div>
+        <button class="btn btn-primary bt-width" id="submit">注册</button>
+        <button class="btn btn-info bt-width" id="reset">重置</button>
+    </form>
+</div>
+
+<script type="text/javascript">
+    window.onload=function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        //抽取添加错误样式函数
+        function AddStyleByError(obj,tip,log) {
+            $("#"+tip).addClass("has-error text-danger");
+            $("#div_for_"+obj).addClass("has-error");
+            $("#"+log).addClass("glyphicon-remove");
+        }
+
+        //设置焦点函数清除样式
+        function setOnfocus(obj,tip,log){
+            $("#"+obj).on("focus",function () {
+                $("#"+tip).removeClass("has-error text-danger has-success text-success");
+                $("#"+tip).html("");
+                $("#div_for_"+obj).removeClass("has-error has-success");
+                $("#"+log).removeClass("glyphicon-remove glyphicon-ok");
+            });
+        }
+
+        function setInputOnfocus(){
+            setOnfocus("userName","tip","log_img");
+            setOnfocus("userEmail","tip1","log_img1");
+            setOnfocus("userPassword","tip2","log_img2");
+            setOnfocus("userPassword1","tip3","log_img3");
+        }
+        setInputOnfocus();
+
+        //点击注册按钮
+        $("#submit").on("click",function () {
+            //邮箱正则
+            var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$");
+            //用户没有输入值
+            if ($("#userName").val().trim()==""){
+                AddStyleByError("userName","tip","log_img");
+                $("#tip").html("请输入用户名!");
+            }else if ($("#userName").val().trim().length<2||$("#userName").val().trim().length>16){
+                AddStyleByError("userName","tip","log_img");
+                $("#tip").html("用户名格式不正确!");
+                return false;
+            }
+
+            //没有输入邮箱
+            if ($("#userEmail").val().trim()==""){
+                AddStyleByError("userEmail","tip1","log_img1");
+                $("#tip1").html("请输入邮箱!");
+            }    //邮箱格式验证
+            else if (!(reg.test($("#userEmail").val().trim()))){
+                AddStyleByError("userEmail","tip1","log_img1");
+                $("#tip1").html("邮箱格式不正确!");
+                return false;
+            }
+
+            //没有输入密码
+            if ($("#userPassword").val().trim()=="") {
+                AddStyleByError("userPassword","tip2","log_img2");
+                $("#tip2").html("请输入密码!");
+            } else if ($("#userPassword").val().trim().length<6||$("#userPassword").val().trim().length>16){//密码格式校验
+                AddStyleByError("userPassword","tip2","log_img2");
+                $("#tip2").html("密码格式不正确!");
+                return false;
+            }
+
+            //没有输入重复密码
+            if ($("#userPassword1").val().trim()=="") {
+                AddStyleByError("userPassword1","tip3","log_img3");
+                $("#tip3").html("请输入重复密码!");
+                return false;
+            } //重复密码校验
+            else if ($("#userPassword1").val()!=$("#userPassword").val()){
+                AddStyleByError("userPassword1","tip3","log_img3");
+                $("#tip3").html("两次密码不一致!");
+                return false;
+            }
+
+            //ajax校验用户名是否注册
+            $.ajax({
+                url:"/user/checkedRegisterUserName",
+                type:"PUT",
+                data:$("#userName").val(),
+                success:function (result) {
+                    if(result.code==1){
+                        alert("用户名可用");
+                    }else{
+                        AddStyleByError("userName","tip","log_img");
+                        $("#tip").html("该用户名已经被注册了!");
+                        return false;
+                    }
+                }
+            });
+            return false;
+        });
+    };
+</script>
+</body>
+</html>
